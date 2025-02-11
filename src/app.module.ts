@@ -4,7 +4,7 @@ import { BankAccountService } from './bank-account/bank-account.service';
 import { BankAccountController } from './bank-account/bank-account.controller';
 
 @Module({
-  imports: [BankAccount],
+  imports: [],
   controllers: [BankAccountController],
   providers: [BankAccountService],
 })
