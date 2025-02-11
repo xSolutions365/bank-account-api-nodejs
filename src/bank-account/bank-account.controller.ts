@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, BadRequestException, HttpStatus, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { BankAccountService } from './bank-account.service';
 import { BankAccount } from './bank-account.model';
 
@@ -22,15 +23,24 @@ export class BankAccountController {
   }
 
   @Put(':id')
-  updateAccount(@Param('id') id: string, @Body() updatedAccount: BankAccount): void {
-    if (Number(id) !== updatedAccount.id) {
-      throw new Error("Account ID mismatch.");
+  updateAccount(@Param('id') id: string, @Body() account: BankAccount, @Res() res: Response) {
+    const numericId = Number(id);
+    if (isNaN(numericId) || numericId !== account.id) {
+      return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Account ID mismatch' });
     }
-    this.bankAccountService.updateAccount(updatedAccount);
-  }
+  
+    this.bankAccountService.updateAccount(account);
+    return res.status(HttpStatus.NO_CONTENT).send(); 
+  }  
 
   @Delete(':id')
-  deleteAccount(@Param('id') id: string): void {
-    this.bankAccountService.deleteAccount(Number(id));
-  }
+  deleteAccount(@Param('id') id: string, @Res() res: Response) {
+    const numericId = Number(id);
+    if (isNaN(numericId)) {
+      return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Invalid account ID' });
+    }
+  
+    this.bankAccountService.deleteAccount(numericId);
+    return res.status(HttpStatus.NO_CONTENT).send(); 
+  }   
 }
