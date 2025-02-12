@@ -22,7 +22,7 @@ export class AppModule implements OnModuleInit {
     ];
     const accounts: BankAccount[] = [];
 
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 0; i < 20; i++) {
       const account = new BankAccount(
         i + 1,
         `Account ${i}`,
