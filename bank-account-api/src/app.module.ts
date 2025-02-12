@@ -2,11 +2,13 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { BankAccount } from './bank-account/bank-account.model';
 import { BankAccountService } from './bank-account/bank-account.service';
 import { BankAccountController } from './bank-account/bank-account.controller';
+import { PrimeService } from './prime/prime.service';
+import { PrimeController } from './prime/prime.controller';
 
 @Module({
   imports: [],
-  controllers: [BankAccountController],
-  providers: [BankAccountService],
+  controllers: [BankAccountController, PrimeController],
+  providers: [BankAccountService, PrimeService],
 })
 export class AppModule implements OnModuleInit {
   constructor(private readonly bankAccountService: BankAccountService) {}
