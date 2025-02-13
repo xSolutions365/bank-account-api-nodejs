@@ -1,6 +1,6 @@
 # Bank Account Solution
 
-This solution contains a simple Bank Account web application with a REST API, a front-end built with React and Vite, and accompanying tests.
+This solution contains a simple Bank Account MVC project with a REST API back-end and a React front-end built with Vite.
 
 ## Project Overview
 
@@ -9,18 +9,20 @@ This solution contains a simple Bank Account web application with a REST API, a 
 - **bank-account.model.ts**: Defines the `BankAccount` class representing a bank account with properties like `Id`, `AccountNumber`, `AccountHolderName`, and `Balance`.
 - **bank-account.service.ts**: Implements the `BankAccountService` class that provides business logic for managing bank accounts.
 
-### Bank Account API Tests
+### **Bank Account UI**
+The **Bank Account UI** is a React-based front-end application built with Vite that provides a user-friendly interface to interact with the API.
+
+- **`components/Header.tsx`**: Renders the navigation bar with links.
+- **`components/Footer.tsx`**: Displays a fixed footer with copyright information.
+- **`components/BankAccountTable.tsx`**: Fetches and displays bank account data in a table format.
+- **`api/bankAccountApi.ts`**: Handles API calls to retrieve bank accounts.
+- **`pages/BankAccountsPage.tsx`**: Main page that renders the `BankAccountTable` and integrates layout components.
+
+### Tests
 - **bank-account.controller.spec.ts**: Contains unit tests for the `BankAccountController` to ensure correct handling of HTTP requests.
 - **bank-account.service.spec.ts**: Contains unit tests for the `BankAccountService` to verify business logic and data manipulation.
 - **bank-account.model.spec.ts**: Contains unit tests for the `BankAccount` model to verify the correctness of its methods.
 - **bank-account.e2e-spec.ts**: Contains end-to-end tests to verify the complete workflow of the application.
-
-### Bank Account UI (Front-End)
-- **React Components**: Implements a front-end for viewing bank accounts.
-- **Integration**: Fetches data from the BankAccount API using REST calls.
-
-### Bank Account UI Tests
-- **Selenium Tests**: Uses Selenium and ChromeDriver to verify UI functionality.
 
 ## Setup Instructions
 
@@ -51,19 +53,6 @@ This solution contains a simple Bank Account web application with a REST API, a 
    ```
    This will display the list of bank accounts.
 
-5. Run the API unit tests:
-   ```sh
-   npm run test
-   ```
-6. Run the API end-to-end tests:
-   ```sh
-   npm run test:e2e
-   ```
-7. Run all API tests:
-   ```sh
-   npm run test:all
-   ```
-
 ### Running the UI
 
 1. Open a new terminal and navigate to the UI project directory:
@@ -88,14 +77,32 @@ This solution contains a simple Bank Account web application with a REST API, a 
    This will display the Bank Account UI.
    ![Bank Account UI](<images/bank-account-ui.png>)
 
-5. Run the UI tests:
+## Running Tests
+
+To run the tests in this project, follow these steps:
+
+### Backend Tests
+
+1. Open a terminal and navigate to the API directory.
    ```sh
-   npm run test:ui
+   cd bank-account-api
+   ```
+2. Run the following command to execute the unit tests:
+   ```sh
+   npm run test
+   ```
+3. Run the following command to execute the end-to-end tests:
+   ```sh
+   npm run test:e2e
+   ```
+4. Run the following command to execute all tests:
+   ```sh
+   npm run test:all
    ```
 
 ## Dependencies
 
-This project requires the following dependencies for testing:
+This project may require the following npm packages for testing:
 
 ### Backend Dependencies
 - `jest`: A delightful JavaScript Testing Framework with a focus on simplicity.
@@ -103,9 +110,8 @@ This project requires the following dependencies for testing:
 - `supertest`: A library for testing HTTP servers.
 
 ### Frontend Dependencies
-- `Mocha`: A JavaScript test framework.
-- `Chai`: An assertion library for testing.
-- `Selenium WebDriver`: A browser automation framework for UI testing.
+- `React`: A declarative JavaScript library for building user interfaces.
+- `TypeScript`: Strongly-typed JavaScript for maintainable code.
 
 To install all dependencies, run:
 ```sh
@@ -119,9 +125,6 @@ To install all dependencies, run:
 - Jest (for testing)
 - Supertest (for HTTP assertions)
 - React (with Vite)
-- Mocha
-- Chai
-- Selenium WebDriver
 
 ## Contributing
 Feel free to submit issues or pull requests for improvements or bug fixes.
