@@ -100,6 +100,30 @@ To run the tests in this project, follow these steps:
    npm run test:all
    ```
 
+### Troubleshooting 
+
+#### ChromeDriver Version Mismatch
+
+If you encounter a `SessionNotCreatedError` when running the UI tests (`npm run test:ui`) with an error message similar to:
+```
+SessionNotCreatedError: session not created: This version of ChromeDriver only supports Chrome version X
+Current browser version is Y...
+```
+Update the `chromedriver` npm package to align with your currently installed Chrome browser version:
+
+```bash
+npm uninstall chromedriver
+npm install --save-dev chromedriver@latest
+```
+
+Then remove `node_modules` and `package-lock.json` and reinstall all dependencies:
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+After completing these steps, try running the UI tests again: `npm run test:ui`.
+
 ## Dependencies
 
 This project may require the following npm packages for testing:
@@ -108,7 +132,9 @@ This project may require the following npm packages for testing:
 - `jest`: A delightful JavaScript Testing Framework with a focus on simplicity.
 - `@nestjs/testing`: Utilities for testing NestJS applications.
 - `supertest`: A library for testing HTTP servers.
-
+cd /Users/thalitavergilio/NodeProjects/bank-account-api/bank-account-ui
+npm run test:uicd /Users/thalitavergilio/NodeProjects/bank-account-api/bank-account-ui
+npm run test:ui
 ### Frontend Dependencies
 - `React`: A declarative JavaScript library for building user interfaces.
 - `TypeScript`: Strongly-typed JavaScript for maintainable code.
