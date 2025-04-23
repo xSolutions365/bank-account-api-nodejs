@@ -100,6 +100,28 @@ To run the tests in this project, follow these steps:
    npm run test:all
    ```
 
+### Frontend Tests
+
+1. Make sure the API is running:
+   ```sh
+   cd bank-account-api
+   npm run start
+   ```
+
+2. In a separate terminal, start the UI application:
+   ```sh
+   cd bank-account-ui
+   npm run dev
+   ```
+
+3. Open a new terminal and run the UI tests:
+   ```sh
+   cd bank-account-ui
+   npm run test:ui
+   ```
+
+   This will run Selenium-based tests that verify the UI components and functionality. The tests require both the API and UI to be running as they test the integration between them.
+
 ### Troubleshooting 
 
 #### ChromeDriver Version Mismatch
