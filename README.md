@@ -146,6 +146,9 @@ npm install
 
 After completing these steps, try running the UI tests again: `npm run test:ui`.
 
+## Context 7 Command
+code --add-mcp '{"name":"context7","type":"stdio","command":"npx","args":["@upstash/context7-mcp@1.0.31"],"env":{"CONTEXT7_API_KEY":"${input:CONTEXT7_API_KEY}"},"gallery":"https://api.mcp.github.com","version":"1.0.31"}' --folder-uri .
+
 ## Dependencies
 
 This project may require the following npm packages for testing:
