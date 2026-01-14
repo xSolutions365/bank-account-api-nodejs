@@ -1,204 +1,119 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version Change: [NONE] → 1.0.0
-Constitution Status: Initial establishment for Bank Account API project
+Version Change: [TEMPLATE] → 1.0.0
+First ratification of the Bank Account API project constitution.
 
-Changes Made:
-- ✅ Created initial constitution with 5 core principles
-- ✅ Added TypeScript/Node.js specific technology standards
-- ✅ Established comprehensive testing requirements (unit + e2e)
-- ✅ Defined code quality and documentation standards
-- ✅ Set up governance framework
+Modified Principles:
+- NEW: Separation of Concerns (Full-stack architecture principle)
+- NEW: REST API Design (Backend contract principle)
+- NEW: Test-Driven Development (Quality assurance principle)
+- NEW: Component Modularity (Frontend architecture principle)
+- NEW: Type Safety (Static typing enforcement)
 
-Templates Verified:
-- ✅ plan-template.md - Constitution Check section aligned with principles
-- ✅ spec-template.md - User stories and requirements format compatible
-- ✅ tasks-template.md - Task organization supports test-first approach
+Added Sections:
+- Core Principles (5 principles established)
+- Technology Standards (Full-stack TypeScript with NestJS + React/Vite)
+- Development Workflow (Git branching, testing requirements)
+- Governance (Amendment process and compliance)
 
-Follow-up Items:
-- None - all placeholders filled with concrete values
-- Constitution ready for immediate use
+Templates Requiring Updates:
+✅ plan-template.md - Already references constitution check
+✅ spec-template.md - Already aligned with testable user stories
+✅ tasks-template.md - Already supports user story organization and test-first approach
 
-Next Steps:
-- Use this constitution as foundation for all feature planning via /speckit.plan
-- Ensure all new features pass Constitution Check gates
-- Review and amend as project evolves
+Follow-up TODOs:
+- None: All placeholders filled with project-specific values
 -->
 
-# Bank Account Solution Constitution
+# Bank Account API Constitution
 
 ## Core Principles
 
-### I. Modular Architecture
+### I. Separation of Concerns
+**MUST** maintain clear boundaries between frontend (bank-account-ui) and backend (bank-account-api) layers. Each layer operates independently with well-defined contracts via REST API. Backend handles business logic, data management, and validation. Frontend focuses on presentation, user interaction, and client-side validation. No business logic shall be duplicated across layers.
 
-The project MUST maintain clear separation between API and UI layers with well-defined boundaries:
+**Rationale**: Enables independent development, testing, and deployment of frontend and backend. Facilitates technology upgrades and team specialization. Prevents tight coupling and code duplication.
 
-- Backend (NestJS) handles all business logic, data management, and API endpoints
-- Frontend (React/Vite) handles presentation, user interactions, and API consumption
-- Modules MUST be self-contained with explicit dependencies via DI (NestJS) or props/context (React)
-- Each module MUST have a single, clear responsibility (controllers handle requests, services handle business logic, models define data structures)
+### II. REST API Design
+**MUST** expose all backend functionality through RESTful HTTP endpoints. Controllers handle HTTP concerns only; business logic resides in service classes. API responses MUST use appropriate HTTP status codes and consistent JSON structures. All endpoints MUST be documented with expected inputs, outputs, and error scenarios.
 
-**Rationale**: Separation of concerns enables independent testing, parallel development of frontend and backend, and easier maintenance of each layer without affecting the other.
+**Rationale**: Ensures predictable, discoverable, and maintainable API contracts. Separates HTTP layer from business logic for better testability. Enables frontend and backend teams to work in parallel against agreed contracts.
 
-### II. RESTful API Design
+### III. Test-Driven Development (NON-NEGOTIABLE)
+**MUST** write tests before implementation. Test hierarchy: unit tests for models/services, integration tests for controllers/API workflows, end-to-end tests for complete user journeys. All new features MUST include corresponding test coverage. Tests MUST fail before implementation begins, then pass after correct implementation (Red-Green-Refactor).
 
-All API endpoints MUST follow REST conventions and best practices:
+**Rationale**: Ensures code correctness, prevents regressions, and provides living documentation. Forces clear thinking about requirements before coding. Creates safety net for refactoring and feature additions.
 
-- Use appropriate HTTP methods: GET (retrieve), POST (create), PUT (update), DELETE (remove)
-- Use noun-based resource URLs (e.g., `/api/BankAccount`, not `/api/getBankAccounts`)
-- Return appropriate HTTP status codes (200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error)
-- Use consistent response formats (JSON) with predictable structures
-- API versioning MUST be considered for breaking changes (e.g., `/api/v1/BankAccount`)
+### IV. Component Modularity
+**MUST** organize frontend code into reusable, single-responsibility components. Each React component focuses on one UI concern. Shared UI patterns extracted into common components (Header, Footer, Table). API calls isolated in dedicated service modules, never inline in components. Page components orchestrate layout, not business logic.
 
-**Rationale**: RESTful design creates predictable, self-documenting APIs that frontend developers can consume reliably, reduces integration bugs, and aligns with industry standards.
+**Rationale**: Promotes code reuse, simplifies testing, and improves maintainability. Enables consistent UI/UX across the application. Facilitates component-level optimization and parallel development.
 
-### III. Test-First Development (NON-NEGOTIABLE)
+### V. Type Safety
+**MUST** leverage TypeScript's static typing throughout the stack. All functions, parameters, and return values MUST have explicit type annotations. Models MUST define clear interfaces for data structures. No use of `any` type except with explicit justification. Configuration files MUST use TypeScript where supported.
 
-TDD MUST be followed for all new features and bug fixes:
-
-- **Unit tests** written FIRST for services and models before implementation
-- **E2E tests** written to verify complete user workflows through the API
-- Tests MUST fail initially, then pass after correct implementation (Red-Green-Refactor)
-- Test coverage MUST include: success scenarios, error cases, edge cases, and boundary conditions
-- All tests MUST pass before code review and merge
-
-**Rationale**: Test-first development catches bugs early, serves as living documentation, enables fearless refactoring, and ensures code meets requirements before implementation begins. Non-negotiable because financial data (bank accounts) requires high reliability.
-
-### IV. Type Safety and Validation
-
-Strong typing and validation MUST be enforced throughout the stack:
-
-- Use TypeScript strictly (no `any` types except when absolutely necessary with justification)
-- Define explicit interfaces/types for all data structures (DTOs, models, API responses)
-- Validate all user inputs at API boundaries (class-validator for NestJS DTOs)
-- Use type guards and runtime checks where TypeScript cannot guarantee safety
-- Frontend MUST validate data received from API before rendering
-
-**Rationale**: Financial applications require data integrity. Type safety catches errors at compile time, prevents runtime crashes, and makes code self-documenting. Validation at boundaries prevents invalid data from entering the system.
-
-### V. Code Quality and Maintainability
-
-All code MUST meet quality standards enforced by automated tooling:
-
-- ESLint MUST pass with no errors (warnings addressed or explicitly justified)
-- Prettier MUST be used for consistent code formatting
-- Follow naming conventions: PascalCase for classes/components, camelCase for functions/variables, UPPER_CASE for constants
-- DRY principle: Extract reusable logic into shared services/utilities
-- YAGNI principle: Implement only what is currently needed, avoid premature optimization
-- Comments MUST explain "why" not "what" (code should be self-explanatory)
-
-**Rationale**: Consistent code quality reduces cognitive load, makes code reviews faster, prevents technical debt accumulation, and enables smooth team collaboration.
+**Rationale**: Catches errors at compile time, not runtime. Provides self-documenting code and IDE autocompletion. Enables safe refactoring with confidence. Enforces data contract consistency between frontend and backend.
 
 ## Technology Standards
 
-### Backend Requirements
+**Stack**: Full-stack TypeScript Node.js application
+- **Backend Framework**: NestJS 11.x (REST API with dependency injection)
+- **Frontend Framework**: React 19.x with Vite 6.x build tool
+- **UI Library**: Material-UI (MUI) 6.x for consistent design system
+- **Language**: TypeScript 5.7.x across all projects
+- **Testing**: Jest 29.x (backend), Mocha 11.x (frontend), Supertest for E2E
+- **Code Quality**: ESLint 9.x, Prettier 3.x for consistent formatting
+- **HTTP Client**: Axios for frontend API calls
 
-- **Framework**: NestJS (Node.js framework)
-- **Language**: TypeScript with strict mode enabled
-- **Testing**: Jest for unit and e2e tests
-- **API Documentation**: Swagger/OpenAPI recommended for production APIs
-- **Dependency Injection**: Use NestJS DI container, avoid manual instantiation
+**Build & Run**:
+- Backend: `npm run start` (port 3000), `npm run start:dev` for watch mode
+- Frontend: `npm run dev` (port 5173)
+- Tests: `npm run test` (unit), `npm run test:e2e` (E2E), `npm run test:all`
 
-### Frontend Requirements
-
-- **Framework**: React 18+ with functional components and hooks
-- **Build Tool**: Vite for fast development and optimized production builds
-- **Language**: TypeScript with strict mode enabled
-- **Testing**: Jest + React Testing Library for component tests
-- **State Management**: React hooks (useState, useContext) for local state; consider Redux/Zustand only if complexity demands it
-- **HTTP Client**: Fetch API or Axios with proper error handling
-
-### Shared Standards
-
-- **Node.js**: Version 18+ LTS
-- **Package Manager**: npm (as evidenced by existing package-lock.json)
-- **Version Control**: Git with conventional commit messages recommended
-- **Code Style**: ESLint + Prettier enforced via pre-commit hooks (recommended)
+**Versioning**: Semantic versioning (MAJOR.MINOR.PATCH) for API changes. MAJOR for breaking API changes, MINOR for backward-compatible features, PATCH for bug fixes.
 
 ## Development Workflow
 
-### Feature Development Process
+**Branching Strategy**: Feature branches follow pattern `###-feature-name` where ### is issue/spec number. Branches created from main, merged via pull request after all tests pass.
 
-1. **Specification**: Create detailed spec in `/specs/[###-feature-name]/spec.md` using `/speckit.spec` command
-2. **Planning**: Generate implementation plan using `/speckit.plan` command with Constitution Check validation
-3. **Task Breakdown**: Create task list using `/speckit.tasks` command organized by user story
-4. **Test-First Implementation**: 
-   - Write failing tests for each task
-   - Implement code to pass tests
-   - Refactor while keeping tests green
-5. **Code Review**: All changes require review against constitution principles
-6. **Merge**: Only after all tests pass and review approved
+**Testing Requirements**:
+- **Unit Tests**: Required for all services, models, and utility functions
+- **Integration Tests**: Required for all controllers and API endpoints
+- **E2E Tests**: Required for critical user journeys (account viewing, data retrieval)
+- **Coverage**: Aim for 80%+ coverage on business logic; 100% on critical paths
 
-### Testing Requirements
+**Code Review Gates**:
+- All tests passing (unit, integration, E2E)
+- TypeScript compilation successful with no errors
+- ESLint checks passing with no violations
+- Type safety maintained (no `any` without justification)
+- Constitution compliance verified
 
-- **Unit Tests**: MUST cover all services, models, and utility functions
-  - Use Jest with NestJS Testing utilities
-  - Mock external dependencies
-  - Aim for >80% code coverage minimum
-
-- **E2E Tests**: MUST cover critical user workflows
-  - Test complete API request/response cycles
-  - Verify integration between layers
-  - Use supertest for HTTP testing
-
-- **Frontend Tests**: MUST test component rendering and user interactions
-  - Use React Testing Library
-  - Test user-visible behavior, not implementation details
-  - Mock API calls with consistent test data
-
-### Quality Gates
-
-Before any code merge, ALL of the following MUST pass:
-
-- ✅ All unit tests pass (`npm run test`)
-- ✅ All e2e tests pass (`npm run test:e2e`)
-- ✅ ESLint shows no errors (`npm run lint`)
-- ✅ Code formatted with Prettier (`npm run format`)
-- ✅ TypeScript compilation succeeds with no errors
-- ✅ Constitution Check passes (principles not violated)
-
-## Documentation Requirements
-
-### Code Documentation
-
-- All public APIs (controllers, services) MUST have JSDoc comments explaining purpose, parameters, return values
-- Complex business logic MUST have explanatory comments
-- README.md MUST be kept current with setup instructions, architecture overview, and how to run tests
-
-### Feature Documentation
-
-- Every feature MUST have specification in `/specs/[###-feature-name]/`
-- API changes MUST be documented in API documentation (Swagger recommended)
-- Breaking changes MUST include migration guide
+**Directory Structure**:
+- `bank-account-api/src/` - Backend source (controllers, services, models)
+- `bank-account-api/test/` - Backend tests (unit, integration, E2E)
+- `bank-account-ui/src/` - Frontend source (components, pages, API services)
+- `bank-account-ui/test/` - Frontend tests
+- `.specify/` - Project specifications, plans, and governance
 
 ## Governance
 
-This constitution represents the foundational principles and standards for the Bank Account Solution project. It supersedes informal practices and serves as the authoritative reference for all development decisions.
+This constitution supersedes all other development practices and guidelines. All code reviews, architectural decisions, and feature implementations MUST verify compliance with these principles.
 
-### Amendment Process
+**Amendment Process**:
+1. Proposed changes documented with rationale and impact analysis
+2. Review by team leads for alignment with project goals
+3. Update version number per semantic versioning rules
+4. Propagate changes to affected templates and documentation
+5. Announce changes to all team members with migration guidance
 
-1. Propose amendment with clear rationale and impact analysis
-2. Review amendment against existing features and templates
-3. Update constitution version according to semantic versioning:
-   - **MAJOR**: Breaking changes to core principles (requires project-wide updates)
-   - **MINOR**: New principles or standards added (requires template updates)
-   - **PATCH**: Clarifications or wording improvements (no structural changes)
-4. Update all affected templates and documentation in `.specify/templates/`
-5. Communicate changes to all team members
-6. Document change in Sync Impact Report (HTML comment at top of this file)
+**Compliance Verification**:
+- Pre-commit hooks enforce linting and type checking
+- Pull requests include constitution compliance checklist
+- Quarterly audits review adherence to principles
+- Technical debt explicitly tracked when exceptions required
 
-### Compliance and Enforcement
-
-- All feature plans (`/speckit.plan`) MUST include Constitution Check section validating compliance
-- Code reviews MUST verify adherence to principles
-- Violations MUST be documented with explicit justification or fixed before merge
-- Repeated violations indicate need for constitution clarification or amendment
-
-### Related Documentation
-
-- Implementation guidance: See `.specify/templates/plan-template.md`
-- Feature specification format: See `.specify/templates/spec-template.md`
-- Task organization: See `.specify/templates/tasks-template.md`
+**Complexity Justification**: Any violation of principles (e.g., using `any` type, skipping tests, breaking separation of concerns) MUST be documented with: (a) specific problem requiring exception, (b) simpler alternatives considered and rejected, (c) plan to refactor if/when possible.
 
 **Version**: 1.0.0 | **Ratified**: 2026-01-14 | **Last Amended**: 2026-01-14
